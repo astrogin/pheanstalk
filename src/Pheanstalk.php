@@ -63,7 +63,19 @@ class Pheanstalk implements PheanstalkInterface
     {
         $this->dispatch(new Command\BuryCommand($job, $priority));
     }
+    
+    public function putInTube(
+        $tube,
+        $data,
+        $priority = PheanstalkInterface::DEFAULT_PRIORITY,
+        $delay = PheanstalkInterface::DEFAULT_DELAY,
+        $ttr = PheanstalkInterface::DEFAULT_TTR
+    ) {
+        $this->useTube($tube);
 
+        return $this->put($data, $priority, $delay, $ttr);
+    }
+    
     /**
      * {@inheritdoc}
      */
